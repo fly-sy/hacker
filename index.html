@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		html{
+			overflow: hidden;
+		}
+		img{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<audio src="mp3/2.mp3" autoplay  loop></audio>
+	<canvas id="canvas"></canvas>
+	<script type="text/javascript">
+		var s = window.screen;
+		var w = s.width;
+		var h = s.height;
+		var canvas =document.getElementById("canvas");
+		//获取绘画环境
+		var ctx =canvas.getContext("2d");
+		//动态添加画布的高度宽度
+		canvas.width = w;
+		canvas.height = h;
+		var str = "ㅎ♪ㅎ☒♫卍☺☀♯㉦▬♯㉦♯☒☺";
+		var fontSize = 14;
+		//初始化多少列
+		var cols = Math.floor(w/fontSize);
+		//定义一个数组存放所有y的坐标
+		var drops = [];
+		//遍历添加初始化所有的y的值为0
+		for (var i = 0; i<cols ; i++ ){
+			drops[i]={
+				yy:Math.floor(Math.random()*-20)
+			};
+		}
+		//开始绘画
+		function draw(){
+			ctx.fillStyle = "rgba(0,0,0,0.2)";
+			ctx.fillRect(0,0,w,h);
+			//颜色
+			ctx.fillStyle = "green";
+			//对文字的修饰 粗细  大小  风格
+			ctx.font= "600 "+fontSize+"px 微软雅黑";
+			//遍历动态添加文字的初始位置
+			for (var i = 0; i<cols ; i++ ){
+				var index = Math.floor(Math.random()*str.length);
+				var x = i*fontSize;
+				var y = drops[i].yy*fontSize;
+				//文字的添加
+				ctx.fillText(str[index],y,x);
+				if (y>=canvas.width && Math.random()>0.89){
+					drops[i].yy=0;
+				}
+				drops[i].yy++;
+			}
+			// console.log(y+"==="+Math.random());
+		};
+		draw();
+		setInterval(draw,33);
+	</script>
+</body>
+</html>
